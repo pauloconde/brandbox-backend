@@ -42,23 +42,27 @@ backend/
 ## Instalación
 
 1. Clonar el repositorio:
+
 ```bash
 git clone https://github.com/tu-usuario/brandbox-backend.git
 cd brandbox-backend
 ```
 
 2. Instalar dependencias:
+
 ```bash
 pnpm install
 ```
 
 3. Configurar variables de entorno:
+
 ```bash
 cp .env.example .env.local
 # Editar .env.local con tus configuraciones
 ```
 
 4. Iniciar el servidor de desarrollo:
+
 ```bash
 pnpm dev
 ```
