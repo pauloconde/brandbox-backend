@@ -95,6 +95,30 @@ BrandBox implementa una estrategia de **multitenancy lógica** en MongoDB Atlas:
 - Modelo de datos flexible con campos comunes y específicos por industria
 - Middleware de seguridad para aislar datos entre clientes
 
+## Variables de Entorno
+
+El proyecto BrandBox requiere varias variables de entorno para su correcto funcionamiento. Estas variables se deben configurar en un archivo `.env.local` en la raíz del proyecto.
+
+### Variables Obligatorias
+
+| Variable | Descripción |
+|----------|-------------|
+| `MONGODB_URI` | Cadena de conexión para MongoDB Atlas |
+| `NEXTAUTH_URL` | URL base de la aplicación (http://localhost:3000 para desarrollo) |
+| `NEXTAUTH_SECRET` | Valor secreto para firmar tokens y sesiones |
+| `APP_ENV` | Entorno actual (development, staging, production) |
+
+### Variables Opcionales
+
+| Variable | Descripción | Valor por defecto |
+|----------|-------------|-------------------|
+| `APP_NAME` | Nombre de la aplicación | BrandBox |
+| `APP_VERSION` | Versión actual | 0.1.0 |
+| `DEFAULT_TENANT_LANGUAGE` | Idioma predeterminado para tenants | es |
+| `API_RATE_LIMIT` | Límite de peticiones por usuario/hora | 100 |
+| `API_TIMEOUT` | Timeout para peticiones en ms | 30000 |
+| `UPLOAD_MAX_SIZE` | Tamaño máximo de archivos en bytes | 5242880 (5MB) |
+
 ## Autenticación y Autorización
 
 Se utiliza NextAuth.js para el sistema de autenticación:
@@ -102,6 +126,38 @@ Se utiliza NextAuth.js para el sistema de autenticación:
 - JWT con información de tenant incluida
 - Soporte para múltiples proveedores de autenticación
 - Roles configurables por tenant (administrador, vendedor, cliente)
+
+### Configuración de Proveedores de Autenticación
+
+Para habilitar proveedores de autenticación adicionales, se deben configurar las siguientes variables según el proveedor:
+
+**Google OAuth:**
+```
+GOOGLE_CLIENT_ID=tu_client_id_aqui
+GOOGLE_CLIENT_SECRET=tu_client_secret_aqui
+```
+
+**GitHub OAuth:**
+```
+GITHUB_ID=tu_github_id_aqui
+GITHUB_SECRET=tu_github_secret_aqui
+```
+
+**Email (SMTP):**
+```
+EMAIL_SERVER=smtp://usuario:contraseña@smtp.example.com:587
+EMAIL_FROM=noreply@example.com
+```
+
+### Generación de NEXTAUTH_SECRET
+
+Para generar un valor seguro para `NEXTAUTH_SECRET`, puedes usar este comando:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+Un archivo `.env.example` está disponible en la raíz del proyecto como referencia para configurar tu propio `.env.local`.
 
 ## Despliegue
 
